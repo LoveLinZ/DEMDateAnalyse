@@ -4,12 +4,12 @@ from mpl_toolkits.mplot3d import Axes3D
 from osgeo import gdal
 
 
-# ds = gdal.Open(r'ASTGTM2_N34E108_dem.tif')
+# ds = gdal.Open(r'example.tif')
 # data = ds.GetRasterBand(1).ReadAsArray()
-# plt.imshow(data, cmap = 'gray')
+# plt.imshow(data)
 # plt.show()
 
-ds = gdal.Open(r'ASTGTM2_N34E109_dem.tif')
+ds = gdal.Open(r'MergeDemData.tif')
 band = ds.GetRasterBand(1)
 # ov_band = band.GetOverview(band.GetOverviewCount() - 3)
 # data = ov_band.ReadAsArray()
