@@ -3,7 +3,6 @@ import numpy as np
 from mpl_toolkits.mplot3d import Axes3D
 from osgeo import gdal
 import matplotlib.animation as animation
-from matplotlib.colors import LightSource
 
 # ds = gdal.Open(r'Near3000MSmooth.tif')
 # data = ds.GetRasterBand(1).ReadAsArray()
@@ -12,23 +11,21 @@ from matplotlib.colors import LightSource
 
 ds = gdal.Open(r'Near1000MSmooth.tif')
 band = ds.GetRasterBand(1)
-# ov_band = band.GetOverview(band.GetOverviewCount() - 3)
-# data = ov_band.ReadAsArray()
 data = band.ReadAsArray()
-# geotransform = ds.GetGeoTransform()
-# minx = geotransform[0]
-# maxy = geotransform[3]
-# maxx = minx + band.XSize * geotransform[1]
-# miny = maxy + band.YSize * geotransform[5]
-# x = np.arange(minx, maxx, geotransform[1])
-# y = np.arange(maxy, miny, geotransform[5])
-# x, y = np.meshgrid(x[:band.XSize], y[:band.YSize])
 x, y = np.meshgrid(np.arange(band.XSize), np.arange(band.YSize))
-fig = plt.figure()
-ax = fig.gca(projection = '3d')
-ax.plot_surface(x, y, data, cmap = 'gist_earth', lw = 0)
-plt.axis('equal')
 
+max_range = np.array([1000 * (x.max()-x.min()), 1000 * (y.max()-y.min()), data.max()-data.min()]).max()/2
+mid_x = (1000 * (x.max()-x.min()))/2
+mid_y = (1000 * (y.max()-y.min()))/2
+mid_z = (data.max()-data.min())/2
+fig = plt.figure()
+ax = fig.gca(projection='3d')
+ax.set_aspect('equal')
+ax.plot_surface(x*1000, y*1000, data*10, cmap = 'gist_earth', lw = 0)
+ax.set_xlim(mid_x - max_range, mid_x + max_range)
+ax.set_ylim(mid_y - max_range, mid_y + max_range)
+ax.set_zlim(mid_z - max_range, mid_z + max_range)
+plt.axis('equal')
 # ax.view_init(elev = 55, azim = 60)
 # plt.axis('off')
 # def animate(i):
