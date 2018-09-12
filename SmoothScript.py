@@ -3,8 +3,8 @@ import numpy as np
 from osgeo import gdal
 import ospybook as pb
 
-in_fn = r'Near1000M.tif'
-out_fn = r'Near1000MSmooth.tif'
+in_fn = r'Near1000Mbilinear.tif'
+out_fn = r'Near1000MbilinearSmooth.tif'
 in_ds = gdal.Open(in_fn)
 in_band = in_ds.GetRasterBand(1)
 in_data = in_band.ReadAsArray()
